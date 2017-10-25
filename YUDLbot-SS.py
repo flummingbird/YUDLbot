@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import tweepy, time, sys, json, urllib, random, config
+import tweepy, time, sys, json, urllib, random, config, solr_config
 
 auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET)
 auth.set_access_token(config.TWITTER_ACCESS_KEY, config.TWITTER_ACCESS_SECRET)
@@ -10,7 +10,7 @@ api = tweepy.API(auth)
 
 
 
-response = urllib.request.urlopen(config.SUBJECT_SOLR_DATA);
+response = urllib.request.urlopen(solr_config.SUBJECT_SOLR_DATA);
 print(response)
 data = response.read()
 decoded = data.decode('utf-8')
