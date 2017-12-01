@@ -1,31 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import tweepy, time, sys, json, urllib, random, config, solr_config
+import tweepy, time, sys, json, urllib, random, config, solr_config, re
 
 auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET)
 auth.set_access_token(config.TWITTER_ACCESS_KEY, config.TWITTER_ACCESS_SECRET)
 api = tweepy.API(auth)
 
+nola_trends = api.trends_place(2458833)
 
-trends =  api.trends_available()
+searches = []
 
+for trends_data in nola_trends:
+    trends = trends_data['trends']
+    for trend in trends:
+        if '#' in trend['name']:
+            trend['name'] = re.sub('#','',trend['name'])
+        searches.append(trend['name'])
 
-#t_data = trends.read()
-#t_decode = t_data.decode('utf-8')
-#t_json = json.loads(t_decode)
-
-
-
-print(trends)
-
-#response = urllib.request.urlopen(solr_config.SOLR_DATA);
-#data = response.read()
-#decoded = data.decode('utf-8')
-#d_json = json.loads(decoded)
-#docs = d_json["response"]["docs"]
-#items = random.sample(docs,1)
-
+print(searches)
 
 #for item in items:
 #  pid = item["PID"]
